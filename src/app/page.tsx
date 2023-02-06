@@ -10,13 +10,6 @@ const inter = Inter({ subsets: ['latin'] })
 
 export default function Home() {
   const [str, setStr] = useState("")
-  useEffect(() => {
-    if (str == "") {
-      const enc = Aes256Encrypt('eyJhbGciOiJSUzI1NiIsInR5cCI6IkpX', '0nhQFlPs-InjMbAo', 'hello world')
-      console.log(enc)
-      setStr(enc)
-    }
-  }, [str])
 
   const pad = (buf: Buffer, size: number) => {
     let bufLen = buf.length;
@@ -41,12 +34,20 @@ export default function Home() {
 
     return encrypted.toString('base64')
   }
+  
+  useEffect(() => {
+    if (str == "") {
+      const enc = Aes256Encrypt('eyJhbGciOiJSUzI1NiIsInR5cCI6IkpX', '0nhQFlPs-InjMbAo', 'hello world')
+      console.log(enc)
+      setStr(enc)
+    }
+  }, [str, Aes256Encrypt])
 
   return (
     <main className={styles.main}>
       <div className={styles.description}>
         <p>
-          Result Encryption of "hello world" is&nbsp;
+          Result Encryption of &quot;hello world&quot; is
           <code className={styles.code}>{str}</code>
         </p>
         <div>
